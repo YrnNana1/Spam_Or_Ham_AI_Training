@@ -2,7 +2,7 @@
 import os
 import io
 import numpy
-from pandas import DataFrame
+from pandas import DataFrame, concat
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
@@ -65,8 +65,9 @@ data = DataFrame({'message': [], 'class': []})
 
 #Including the email details with the spam/ham classification in the dataframe
 # specifying the path of the unzipped folders
-data = data.append(dataFrameFromDirectory('full/spam', 'spam'))
-data = data.append(dataFrameFromDirectory('full/ham', 'ham'))
+spam_data = dataFrameFromDirectory('full/spam', 'spam')
+ham_data = dataFrameFromDirectory('full/ham', 'ham')
+data = concat([data, spam_data, ham_data])
 
 # printing the content of the data frames.
 print(data.info())
